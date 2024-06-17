@@ -8,7 +8,7 @@ def get_ecfp(mol,radius=3,fpsize=2048):
     am = Chem.GetAdjacencyMatrix(mol,useBO=True)
     for i,a in enumerate(mol.GetAtoms()):
         am[i][i] = -1*a.GetAtomicNum()
-    for r in range(radius):
+    for r in range(radius+1):
         pm = matrix_power(am,r+1)
         invariants += [pm[i][i] for i in range(am.shape[0])]
     ecfp.SetBitsFromList([hash(inv)%fpsize for inv in invariants])
